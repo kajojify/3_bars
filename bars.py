@@ -8,9 +8,7 @@ def load_data(filepath):
     информацию о барах Москвы."""
 
     with open(filepath) as f:
-        bars_json = f.readline()
-        bars_data = json.loads(bars_json)
-    return bars_data
+        return json.load(f)
 
 
 def get_biggest_bar(data):
@@ -32,8 +30,7 @@ def get_smallest_bar(data):
 
 
 def get_closest_bar(data, longitude, latitude):
-    """Находит ближайший бар на основании координат, введённых пользователем 
-    с клавиатуры. 
+    """Находит ближайший бар на основании координат longitude и latitude. 
     longitude -- долгота
     latitude -- широта
 
@@ -45,14 +42,14 @@ def get_closest_bar(data, longitude, latitude):
     Возвращает название бара"""
 
     earth_radius = 6372795
-    latitude, longitude = math.radians(latitude), math.radians(longitude)
-    sin_lat, cos_lat = math.sin(latitude), math.cos(latitude)
+    latitude_rad, longitude_rad = math.radians(latitude), math.radians(longitude)
+    sin_lat, cos_lat = math.sin(latitude_rad), math.cos(latitude_rad) 
     min_distance = 21*10**6
     for bar in data:
         bar_lat, bar_longit = bar['Cells']['geoData']['coordinates']
-        bar_lat, bar_longit = math.radians(bar_lat), math.radians(bar_longit)
-        sin_bar_lat, cos_bar_lat = math.sin(bar_lat), math.cos(bar_lat)
-        cos_delta_longit = math.cos(bar_longit - longitude)
+        bar_lat_rad, bar_longit_rad = math.radians(bar_lat), math.radians(bar_longit)
+        sin_bar_lat, cos_bar_lat = math.sin(bar_lat_rad), math.cos(bar_lat_rad)
+        cos_delta_longit = math.cos(bar_longit_rad - longitude_rad)
         central_angle = math.acos(sin_lat*sin_bar_lat+
                                   cos_lat*cos_bar_lat*cos_delta_longit)
         distance = earth_radius*central_angle
@@ -67,7 +64,7 @@ if __name__ == '__main__':
     try:
         bars_data = load_data(filepath)
     except FileNotFoundError:
-        print("Нет такого файла или директории! Повторите ввод.")
+        print("Нет такого файла или директории! Завершение программы.")
         exit()
     longitude, latitude = [float(coord) for coord in 
                            input("Через пробел введите текущие GPS-координаты --- ").split()]
