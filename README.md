@@ -1,10 +1,19 @@
-# 3_bars
+3_bars
+===================
 
-Скрипт bars.py рассчитывает самый большой бар в Моске, самый маленький бар в Моске, а также ближайший московский бар на основании координат местонахождения пользователя, введённых с клавиатуры.
-Функция подсчета определения ближайшего бара реализована собственноручно на основании статьи https://en.wikipedia.org/wiki/Great-circle_distance
+The script computes the biggest bar in Moscow, the smallest bar in Moscow and the nearest bar as well. 
 
-Запуск скрипта производится следующим образом:
-1) Открыть терминал.
-2) Перейти в папку, содержащую скрипт bars.py.
-3) Выполнить команду python bars.py. Если при выполнении программы произошла ошибка - попробуйте выполнить команду 
-python3 bars.py .
+The script takes coordinates of user's location as input. 
+
+The data about Moscow bars was taken from http://data.mos.ru/opendata/7710881420-bary 
+
+The distance is calculated according to the Great-circle distance formula (unfortunately without usin geopy).
+
+How to run
+----------
+Clone this repository. Then go to the repository directory.
+
+Run the script:
+```
+python3 bars.py
+```
